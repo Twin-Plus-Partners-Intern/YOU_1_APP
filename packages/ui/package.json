@@ -1,0 +1,23 @@
+{
+  "name": "@you-il/ui",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./src/Button.tsx",
+  "types": "./src/Button.tsx",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "nativewind": "*"
+  },
+  "devDependencies": {
+    "@types/react": "~18.3.12",
+    "@types/react-native": "~0.73.0",
+    "react": "18.3.1",
+    "react-native": "0.76.3",
+    "nativewind": "^4.0.1",
+    "typescript": "^5.5.4"
+  }
+}
