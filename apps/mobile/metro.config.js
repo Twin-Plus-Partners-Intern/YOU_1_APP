@@ -36,7 +36,11 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   );
 
   if (isSingleton) {
-    const pathToResolve = path.resolve(projectRoot, "node_modules", moduleName);
+    const fs = require("fs");
+    let pathToResolve = path.resolve(projectRoot, "node_modules", moduleName);
+    if (!fs.existsSync(pathToResolve)) {
+      pathToResolve = path.resolve(workspaceRoot, "node_modules", moduleName);
+    }
     return context.resolveRequest(context, pathToResolve, platform);
   }
 

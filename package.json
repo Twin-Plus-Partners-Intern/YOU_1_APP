@@ -3,9 +3,8 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
-    "dev": "turbo run dev",
+    "dev": "pnpm --filter mobile start",
     "dev:mobile": "pnpm --filter mobile start",
-    "dev:api": "pnpm --filter api dev",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "clean": "rm -rf node_modules apps/*/node_modules packages/*/node_modules"
