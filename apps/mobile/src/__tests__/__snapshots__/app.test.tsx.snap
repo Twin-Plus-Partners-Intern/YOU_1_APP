@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`YOU-IL Mobile App Core Test Suite renders correctly and matches snapshot 1`] = `
+<View>
+  <Text>
+    YOU-IL Goal Manager App
+  </Text>
+</View>
+`;
