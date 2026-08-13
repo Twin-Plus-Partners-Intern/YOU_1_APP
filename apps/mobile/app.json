@@ -40,6 +40,13 @@
             "enableShrinkResourcesInReleaseBuilds": true
           }
         }
+      ],
+      [
+        "@sentry/react-native/expo",
+        {
+          "organization": "youil-org",
+          "project": "you-il-app"
+        }
       ]
     ]
   }
