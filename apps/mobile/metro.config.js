@@ -36,6 +36,11 @@ config.resolver.resolveRequest = (context, moduleName, platform) => {
   );
 
   if (isSingleton) {
+    // When bundling for web, let Metro's default resolver alias 'react-native' to 'react-native-web'
+    if (platform === "web" && (moduleName === "react-native" || moduleName.startsWith("react-native/"))) {
+      return context.resolveRequest(context, moduleName, platform);
+    }
+
     const fs = require("fs");
     let pathToResolve = path.resolve(projectRoot, "node_modules", moduleName);
     if (!fs.existsSync(pathToResolve)) {
