@@ -2,8 +2,8 @@
   "name": "@you-il/ui",
   "version": "1.0.0",
   "private": true,
-  "main": "./src/Button.tsx",
-  "types": "./src/Button.tsx",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit"
   },
