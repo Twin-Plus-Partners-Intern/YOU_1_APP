@@ -13,6 +13,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@expo-google-fonts/montserrat": "^0.4.2",
     "@expo/metro-runtime": "~6.1.2",
     "@sentry/react-native": "^8.0.0",
     "@supabase/supabase-js": "^2.45.4",
@@ -22,6 +23,7 @@
     "expo": "~54.0.0",
     "expo-build-properties": "~1.0.10",
     "expo-constants": "~18.0.13",
+    "expo-font": "^57.0.1",
     "expo-linking": "~8.0.12",
     "expo-modules-core": "3.0.30",
     "expo-router": "~6.0.24",
