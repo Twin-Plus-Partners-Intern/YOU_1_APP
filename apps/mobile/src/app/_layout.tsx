@@ -13,10 +13,9 @@ import {
 import { GlobalErrorBoundary } from '../components/ErrorBoundary';
 import '../global.css';
 
-// Initialize Sentry with Expo Router instrumentation
+// Initialize Sentry
 Sentry.init({
   dsn: process.env.EXPO_PUBLIC_SENTRY_DSN || 'https://examplePublicKey@o0.ingest.sentry.io/0',
-  integrations: [Sentry.expoRouterIntegration()],
 });
 
 // Prevent splash screen from auto-hiding before asset loading is complete
