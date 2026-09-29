@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ScrollView, View, SafeAreaView } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { Typography, Button, FormField, Badge, TaskCard, ConflictBanner } from '@you-il/ui';
+import { Typography, Button, Input, FormField, Badge, TaskCard, ConflictBanner } from '@you-il/ui';
 
 export default function Home() {
   // Demo states
