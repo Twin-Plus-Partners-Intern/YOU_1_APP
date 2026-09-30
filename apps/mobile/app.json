@@ -26,6 +26,9 @@
       "package": "com.you1.app",
       "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"]
     },
+    "web": {
+      "favicon": "./src/assets/images/favicon.png"
+    },
     "plugins": [
       "expo-router",
       [
