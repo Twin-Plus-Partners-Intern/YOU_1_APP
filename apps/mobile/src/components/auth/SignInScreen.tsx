@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import React, { useState } from 'react';
 import {
   View,
@@ -89,7 +90,7 @@ export const SignInScreen: React.FC<SignInScreenProps> = ({
                   Welcome back
                 </Text>
                 <Text className="text-primary-400 font-montserrat-medium text-base text-center mt-2">
-                  Let's finish task together
+                  Lets finish task together
                 </Text>
               </View>
 
