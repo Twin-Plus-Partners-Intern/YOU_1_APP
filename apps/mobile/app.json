@@ -44,11 +44,7 @@
           "organization": "youil-org",
           "project": "you-il-app"
         }
-      ],
-      "@sentry/react-native",
-      "expo-font",
-      "expo-splash-screen",
-      "expo-status-bar"
+      ]
     ]
   }
 }
