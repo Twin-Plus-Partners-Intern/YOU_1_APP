@@ -10,7 +10,8 @@
   "peerDependencies": {
     "react": "*",
     "react-native": "*",
-    "nativewind": "*"
+    "nativewind": "*",
+    "@expo/vector-icons": "*"
   },
   "devDependencies": {
     "@types/react": "~19.1.17",

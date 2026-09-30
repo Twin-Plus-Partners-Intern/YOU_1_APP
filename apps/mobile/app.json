@@ -24,10 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.youil.app",
-      "permissions": [
-        "INTERNET",
-        "ACCESS_NETWORK_STATE"
-      ]
+      "permissions": ["INTERNET", "ACCESS_NETWORK_STATE"]
     },
     "plugins": [
       "expo-router",
@@ -47,7 +44,11 @@
           "organization": "youil-org",
           "project": "you-il-app"
         }
-      ]
+      ],
+      "@sentry/react-native",
+      "expo-font",
+      "expo-splash-screen",
+      "expo-status-bar"
     ]
   }
 }

@@ -89,10 +89,10 @@ module.exports = {
         },
       },
       fontFamily: {
-        montserrat: ['Montserrat_400Regular', 'sans-serif'],
-        'montserrat-medium': ['Montserrat_500Medium', 'sans-serif'],
-        'montserrat-semibold': ['Montserrat_600SemiBold', 'sans-serif'],
-        'montserrat-bold': ['Montserrat_700Bold', 'sans-serif'],
+        montserrat: ['Montserrat_400Regular'],
+        'montserrat-medium': ['Montserrat_500Medium'],
+        'montserrat-semibold': ['Montserrat_600SemiBold'],
+        'montserrat-bold': ['Montserrat_700Bold'],
       },
       borderRadius: {
         xs: '4px',

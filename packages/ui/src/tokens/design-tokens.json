@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "name": "YOU-IL Design Tokens",
+    "version": "1.0.0",
+    "notes": "Even though the color the boss wants is the Pip-Boy color, using it as the primary color would conflict with the success status color. Therefore, I'll use the Pip-Boy color as an accent color where appropriate, while keeping the status colors clear and consistent."
+  },
+  "colors": {
+    "primary": {
+      "DEFAULT": "#FFFFFF",
+      "100": "#2C2E30",
+      "200": "#525457",
+      "300": "#7A7C80",
+      "400": "#A8AAAD",
+      "500": "#FFFFFF",
+      "600": "#EAEAEA",
+      "700": "#D5D5D5",
+      "800": "#BFBFBF",
+      "900": "#AAAAAA",
+      "1000": "#888888"
+    },
+    "secondary": {
+      "DEFAULT": "#00EE00",
+      "0": "#FFFFFF",
+      "50": "#E6FDE6",
+      "100": "#CCFCCC",
+      "150": "#B3FAB3",
+      "200": "#99F899",
+      "300": "#66F566",
+      "400": "#33F133",
+      "500": "#00EE00",
+      "600": "#00BE00",
+      "700": "#008F00",
+      "800": "#005F00",
+      "850": "#004700",
+      "900": "#003000",
+      "950": "#001800",
+      "1000": "#000000"
+    },
+    "warning": {
+      "DEFAULT": "#F59E0B",
+      "100": "#FEF5E7",
+      "200": "#FCE2B6",
+      "300": "#F9C56D",
+      "400": "#F7B13C",
+      "500": "#F59E0B",
+      "600": "#C47E09",
+      "700": "#935F07",
+      "800": "#623F04",
+      "900": "#311F02",
+      "1000": "#181001"
+    },
+    "error": {
+      "DEFAULT": "#EF4444",
+      "100": "#FDECEC",
+      "200": "#FAC7C7",
+      "300": "#F58F8F",
+      "400": "#F26969",
+      "500": "#EF4444",
+      "600": "#C13737",
+      "700": "#932929",
+      "800": "#661C1C",
+      "900": "#380E0E",
+      "1000": "#210808"
+    },
+    "information": {
+      "DEFAULT": "#3B82F6",
+      "0": "#FFFFFF",
+      "50": "#EBECFF",
+      "100": "#D6D9FF",
+      "150": "#C2C6FF",
+      "200": "#AEB3FF",
+      "300": "#858EFF",
+      "400": "#5D68FF",
+      "500": "#3442FF",
+      "600": "#2A35CE",
+      "700": "#1F289D",
+      "800": "#151B6D",
+      "850": "#101554",
+      "900": "#0A0E3C",
+      "950": "#050823",
+      "1000": "#00010B"
+    },
+    "success": {
+      "DEFAULT": "#22C55E",
+      "100": "#E9F9EF",
+      "200": "#BDEECF",
+      "300": "#7ADC9E",
+      "400": "#4ED17E",
+      "500": "#22C55E",
+      "600": "#1B9E4B",
+      "700": "#147638",
+      "800": "#0E4F26",
+      "900": "#072713",
+      "1000": "#031309"
+    },
+    "neutral": {
+      "DEFAULT": "#263446",
+      "100": "#CBD6E3",
+      "200": "#ACB8C7",
+      "300": "#6D7D8F",
+      "400": "#4E5F73",
+      "500": "#2F4157",
+      "600": "#263446",
+      "700": "#1C2734",
+      "800": "#131A23",
+      "900": "#090D11",
+      "1000": "#050609"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "Montserrat"
+    },
+    "scale": {
+      "h1": {
+        "fontSize": 40,
+        "fontWeight": 700,
+        "lineHeight": 44
+      },
+      "h2": {
+        "fontSize": 36,
+        "fontWeight": 700,
+        "lineHeight": 40
+      },
+      "h3": {
+        "fontSize": 32,
+        "fontWeight": 700,
+        "lineHeight": 36
+      },
+      "h4": {
+        "fontSize": 28,
+        "fontWeight": 700,
+        "lineHeight": 32
+      },
+      "heading": {
+        "fontSize": 24,
+        "fontWeight": 600,
+        "lineHeight": 30
+      },
+      "large": {
+        "fontSize": 20,
+        "fontWeight": 600,
+        "lineHeight": 26
+      },
+      "largeSingleLine": {
+        "fontSize": 20,
+        "fontWeight": 600,
+        "lineHeight": 20
+      },
+      "medium": {
+        "fontSize": 16,
+        "fontWeight": 600,
+        "lineHeight": 24
+      },
+      "mediumSingleLine": {
+        "fontSize": 16,
+        "fontWeight": 600,
+        "lineHeight": 16
+      },
+      "small": {
+        "fontSize": 14,
+        "fontWeight": 600,
+        "lineHeight": 20
+      },
+      "smallSingleLine": {
+        "fontSize": 14,
+        "fontWeight": 600,
+        "lineHeight": 14
+      },
+      "extraSmall": {
+        "fontSize": 12,
+        "fontWeight": 600,
+        "lineHeight": 16
+      },
+      "extraSmallSingleLine": {
+        "fontSize": 12,
+        "fontWeight": 600,
+        "lineHeight": 12
+      }
+    }
+  },
+  "spacing": {
+    "outerMargin": 16,
+    "gutter": 20
+  },
+  "borderRadius": {
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 20,
+    "2xl": 24,
+    "3xl": 28,
+    "4xl": 32,
+    "full": 9999
+  }
+}

@@ -3,8 +3,8 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
+import { useFonts } from 'expo-font';
 import {
-  useFonts,
   Montserrat_400Regular,
   Montserrat_500Medium,
   Montserrat_600SemiBold,
@@ -13,10 +13,16 @@ import {
 import { GlobalErrorBoundary } from '../components/ErrorBoundary';
 import '../global.css';
 
-// Initialize Sentry with Expo Router instrumentation
+// Initialize Sentry safely
+const sentryIntegrations = [];
+if (typeof (Sentry as any).expoRouterIntegration === 'function') {
+  sentryIntegrations.push((Sentry as any).expoRouterIntegration());
+}
+
 Sentry.init({
   dsn: process.env.EXPO_PUBLIC_SENTRY_DSN || 'https://examplePublicKey@o0.ingest.sentry.io/0',
-  integrations: [Sentry.expoRouterIntegration()],
+  integrations: sentryIntegrations,
+  enabled: !__DEV__,
 });
 
 // Prevent splash screen from auto-hiding before asset loading is complete
@@ -58,7 +64,7 @@ function RootLayout() {
             fontWeight: 'bold',
           },
           contentStyle: {
-            backgroundColor: '#f8fafc',
+            backgroundColor: '#05070A',
           },
         }}
       >
@@ -74,5 +80,5 @@ function RootLayout() {
   );
 }
 
-// Wrap the root layout with Sentry to capture navigation traces and errors
-export default Sentry.wrap(RootLayout);
+// Wrap the root layout with Sentry if available, otherwise export RootLayout directly
+export default typeof Sentry.wrap === 'function' ? Sentry.wrap(RootLayout) : RootLayout;
