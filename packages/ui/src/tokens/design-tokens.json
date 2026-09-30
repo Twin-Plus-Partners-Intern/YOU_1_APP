@@ -1,6 +1,6 @@
 {
   "meta": {
-    "name": "YOU-IL Design Tokens",
+    "name": "YOU-1 Design Tokens",
     "version": "1.0.0",
     "notes": "Even though the color the boss wants is the Pip-Boy color, using it as the primary color would conflict with the success status color. Therefore, I'll use the Pip-Boy color as an accent color where appropriate, while keeping the status colors clear and consistent."
   },
