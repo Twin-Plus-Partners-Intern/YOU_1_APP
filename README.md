@@ -1,6 +1,6 @@
-# YOU-IL Mobile App Monorepo
+# YOU-1 Mobile App Monorepo
 
-Welcome to the **YOU-IL** monorepo, a client-first goal manager application powered by AI (Google Gemini) and built for procrastinators (hệ P). This repository is dedicated exclusively to the Mobile Frontend application.
+Welcome to the **YOU-1** monorepo, a client-first goal manager application powered by AI (Google Gemini) and built for procrastinators (hệ P). This repository is dedicated exclusively to the Mobile Frontend application.
 
 ---
 

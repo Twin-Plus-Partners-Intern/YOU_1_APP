@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-unresolved
 import React, { useState } from 'react';
 import {
   View,
@@ -8,11 +7,13 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Mail, Lock } from 'lucide-react-native';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react-native';
 import { Svg, Path } from 'react-native-svg';
+import { useAuthStore } from '@you-il/api';
 
 interface SignUpScreenProps {
   onNavigateToSignIn?: () => void;
@@ -61,8 +62,17 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const handleSignUp = () => {
-    if (onSignUpSuccess) onSignUpSuccess();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { signUp, isLoading, error, clearError } = useAuthStore();
+
+  const handleSignUp = async () => {
+    clearError();
+    const success = await signUp({ email, password, confirmPassword });
+    if (success && onSignUpSuccess) {
+      onSignUpSuccess();
+    }
   };
 
   return (
@@ -102,51 +112,103 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
                   <Mail size={20} color="#94A3B8" className="mr-3" />
                   <TextInput
                     value={email}
-                    onChangeText={setEmail}
+                    onChangeText={(text) => {
+                      setEmail(text);
+                      if (error) clearError();
+                    }}
                     placeholder="Email"
                     placeholderTextColor="#64748B"
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    editable={!isLoading}
                     className="flex-1 text-primary-500 font-montserrat text-base p-0"
                   />
                 </View>
 
-                {/* Password Input */}
+                {/* Password Input with Eye / EyeOff Icon Toggle */}
                 <View className="flex-row items-center bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-4">
                   <Lock size={20} color="#94A3B8" className="mr-3" />
                   <TextInput
                     value={password}
-                    onChangeText={setPassword}
+                    onChangeText={(text) => {
+                      setPassword(text);
+                      if (error) clearError();
+                    }}
                     placeholder="Password"
                     placeholderTextColor="#64748B"
-                    secureTextEntry
+                    secureTextEntry={!showPassword}
+                    editable={!isLoading}
                     className="flex-1 text-primary-500 font-montserrat text-base p-0"
                   />
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => setShowPassword((prev) => !prev)}
+                    className="p-1 ml-2"
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    {showPassword ? (
+                      <EyeOff size={20} color="#94A3B8" />
+                    ) : (
+                      <Eye size={20} color="#94A3B8" />
+                    )}
+                  </TouchableOpacity>
                 </View>
 
-                {/* Confirm Password Input */}
+                {/* Confirm Password Input with Independent Eye / EyeOff Icon Toggle */}
                 <View className="flex-row items-center bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-4">
                   <Lock size={20} color="#94A3B8" className="mr-3" />
                   <TextInput
                     value={confirmPassword}
-                    onChangeText={setConfirmPassword}
+                    onChangeText={(text) => {
+                      setConfirmPassword(text);
+                      if (error) clearError();
+                    }}
                     placeholder="Confirm Password"
                     placeholderTextColor="#64748B"
-                    secureTextEntry
+                    secureTextEntry={!showConfirmPassword}
+                    editable={!isLoading}
                     className="flex-1 text-primary-500 font-montserrat text-base p-0"
                   />
+                  <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => setShowConfirmPassword((prev) => !prev)}
+                    className="p-1 ml-2"
+                    hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                  >
+                    {showConfirmPassword ? (
+                      <EyeOff size={20} color="#94A3B8" />
+                    ) : (
+                      <Eye size={20} color="#94A3B8" />
+                    )}
+                  </TouchableOpacity>
                 </View>
               </View>
+
+              {/* THÔNG BÁO LỖI NẾU CÓ */}
+              {error ? (
+                <View className="bg-error-900/40 border border-error-500 rounded-xl p-3 mt-4">
+                  <Text className="text-error-400 font-montserrat-medium text-sm text-center">
+                    {error}
+                  </Text>
+                </View>
+              ) : null}
 
               {/* 4. NÚT ACTION CHÍNH (mt-6 = 24px) */}
               <TouchableOpacity
                 activeOpacity={0.85}
                 onPress={handleSignUp}
-                className="bg-primary-500 rounded-full py-4 items-center justify-center mt-6 shadow-sm"
+                disabled={isLoading}
+                className={`rounded-full py-4 items-center justify-center mt-6 shadow-sm ${
+                  isLoading ? 'bg-primary-400' : 'bg-primary-500'
+                }`}
               >
-                <Text className="text-neutral-1000 font-montserrat-bold text-base">
-                  Create account
-                </Text>
+                {isLoading ? (
+                  <ActivityIndicator color="#05070A" size="small" />
+                ) : (
+                  <Text className="text-neutral-1000 font-montserrat-bold text-base">
+                    Create account
+                  </Text>
+                )}
               </TouchableOpacity>
 
               {/* 5. CỤM DIVIDER / LABEL SOCIAL (mt-8 = 32px) */}
@@ -158,6 +220,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
               <View className="flex-row justify-center items-center gap-5 mt-4">
                 <TouchableOpacity
                   activeOpacity={0.8}
+                  disabled={isLoading}
                   className="w-14 h-14 rounded-full bg-white items-center justify-center shadow-md"
                 >
                   <FacebookIcon />
@@ -165,6 +228,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
                 <TouchableOpacity
                   activeOpacity={0.8}
+                  disabled={isLoading}
                   className="w-14 h-14 rounded-full bg-white items-center justify-center shadow-md"
                 >
                   <GoogleIcon />
@@ -172,6 +236,7 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
 
                 <TouchableOpacity
                   activeOpacity={0.8}
+                  disabled={isLoading}
                   className="w-14 h-14 rounded-full bg-white items-center justify-center shadow-md"
                 >
                   <AppleIcon />
@@ -184,8 +249,8 @@ export const SignUpScreen: React.FC<SignUpScreenProps> = ({
               <Text className="text-primary-400 font-montserrat-medium text-sm">
                 Already have an account?{' '}
               </Text>
-              <TouchableOpacity onPress={onNavigateToSignIn}>
-                <Text className="text-info-400 font-montserrat-semibold text-sm">Log in</Text>
+              <TouchableOpacity onPress={onNavigateToSignIn} disabled={isLoading}>
+                <Text className="text-secondary-500 font-montserrat-semibold text-sm">Log in</Text>
               </TouchableOpacity>
             </View>
           </ScrollView>

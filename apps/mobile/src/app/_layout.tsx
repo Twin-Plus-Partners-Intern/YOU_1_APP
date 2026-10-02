@@ -71,7 +71,7 @@ function RootLayout() {
         <Stack.Screen
           name="index"
           options={{
-            title: 'YOU-IL AI Goal Manager',
+            title: 'YOU-1 AI Goal Manager',
             headerShown: false,
           }}
         />
