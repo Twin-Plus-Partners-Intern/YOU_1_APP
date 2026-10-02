@@ -1,15 +1,21 @@
+import { MbtiType } from '@you-il/types';
 import { aiService } from './services/ai.service';
 
 export * from './client';
 export * from './services/goal.service';
 export * from './services/ai.service';
+export * from './services/auth.service';
+export * from './services/character.service';
+export * from './utils/cloudinary';
 export * from './store/useGoalStore';
+export * from './stores/useAuthStore';
+export * from './stores/useOnboardingStore';
 
 // Backwards-compatibility wrapper for getAiGoalSuggestions
 export async function getAiGoalSuggestions(goalTitle: string, mbti?: string): Promise<string> {
   const response = await aiService.getAiGoalSuggestions({
     title: goalTitle,
-    mbti: mbti as any,
+    mbti: mbti ? (mbti as MbtiType) : undefined,
   });
   if (response.success && response.data) {
     return response.data.insights;
