@@ -5,14 +5,14 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/images/icon.png",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "jsEngine": "hermes",
     "scheme": "you1",
     "splash": {
       "image": "./src/assets/images/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#05070A"
     },
     "ios": {
       "supportsTablet": true,
@@ -47,7 +47,8 @@
           "organization": "you1-org",
           "project": "you-1-app"
         }
-      ]
+      ],
+      "expo-image"
     ]
   }
 }
