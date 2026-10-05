@@ -72,7 +72,9 @@ export const WelcomeIntroScreen: React.FC<WelcomeIntroScreenProps> = ({ onNext, 
             {/* Character Dialogue Box in Monospace */}
             <View className="px-4 py-3 max-w-[320px]">
               <Text className="font-mono text-neutral-100 text-base text-center leading-6">
-                Hi there! I know planning can feel overwhelming, so I'll be your 'J' from now on.
+                {
+                  "Hi there! I know planning can feel overwhelming, so I'll be your 'J' from now on."
+                }
               </Text>
             </View>
           </View>

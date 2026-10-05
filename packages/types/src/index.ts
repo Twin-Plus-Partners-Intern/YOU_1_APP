@@ -3,3 +3,4 @@ export * from './goal';
 export * from './dto';
 export * from './auth';
 export * from './onboarding';
+export * from './user-goals';

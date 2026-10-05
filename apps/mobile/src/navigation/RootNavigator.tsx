@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAuthStore, useOnboardingStore } from '@you-il/api';
+import { useAuthStore, useOnboardingStore, goalService } from '@you-il/api';
+import { UserGoalPlanDTO } from '@you-il/types';
 import { SignInScreen } from '../components/auth/SignInScreen';
 import { SignUpScreen } from '../components/auth/SignUpScreen';
 import {
@@ -11,6 +12,7 @@ import {
   WelcomeOutfitScreen,
   JayCharacter,
 } from '../components/onboarding';
+import { PostOnboardingFlow } from '../features/post-onboarding';
 
 export type RootStackParamList =
   | 'Splash'
@@ -19,11 +21,13 @@ export type RootStackParamList =
   | 'WelcomeOutfit'
   | 'SignUp'
   | 'SignIn'
+  | 'PostOnboarding'
   | 'Dashboard';
 
 export const RootNavigator: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<RootStackParamList>('Splash');
   const [isSplashTimerDone, setIsSplashTimerDone] = useState<boolean>(false);
+  const [userGoalPlan, setUserGoalPlan] = useState<UserGoalPlanDTO | null>(null);
 
   const {
     isAuthenticated,
@@ -80,6 +84,17 @@ export const RootNavigator: React.FC = () => {
     setCurrentRoute('SignUp');
   };
 
+  // Xử lý sau khi hoàn thành POST-AUTH ONBOARDING (Goal Plan 3 bước)
+  const handlePostOnboardingComplete = async (plan: UserGoalPlanDTO) => {
+    setUserGoalPlan(plan);
+    try {
+      await goalService.createUserGoalPlan(plan);
+    } catch (e) {
+      console.warn('Failed to submit goal plan:', e);
+    }
+    setCurrentRoute('Dashboard');
+  };
+
   // 4. CẤU HÌNH RESET DỮ LIỆU ĐỂ TEST (DEV ONLY): Xóa sạch AsyncStorage & phát lại Onboarding
   const handleDevResetStorage = async () => {
     try {
@@ -89,6 +104,7 @@ export const RootNavigator: React.FC = () => {
       console.warn('Error clearing AsyncStorage:', e);
     }
     setIsSplashTimerDone(false);
+    setUserGoalPlan(null);
     setCurrentRoute('Splash');
   };
 
@@ -98,6 +114,18 @@ export const RootNavigator: React.FC = () => {
   // =========================================================================
   if (isLoading || currentRoute === 'Splash') {
     return <SplashScreen onFinish={handleSplashFinish} durationMs={1500} />;
+  }
+
+  // =========================================================================
+  // POST-AUTH ONBOARDING FLOW (Triggered right after Sign In / Sign Up)
+  // =========================================================================
+  if (currentRoute === 'PostOnboarding') {
+    return (
+      <PostOnboardingFlow
+        onComplete={handlePostOnboardingComplete}
+        onCancel={() => setCurrentRoute('Dashboard')}
+      />
+    );
   }
 
   // =========================================================================
@@ -146,16 +174,44 @@ export const RootNavigator: React.FC = () => {
                 {selectedOutfitId}
               </Text>
             </View>
-            <View className="flex-row justify-between">
-              <Text className="text-primary-400 font-montserrat">Joined Date:</Text>
-              <Text className="text-primary-400 font-montserrat-small">
-                {new Date(user.createdAt).toLocaleDateString()}
+          </View>
+
+          {/* User Goal Plan Summary if available */}
+          {userGoalPlan ? (
+            <View className="bg-neutral-900 border border-secondary-500/50 rounded-2xl p-5 mt-4 gap-2 shadow-md">
+              <Text className="text-secondary-500 font-montserrat-bold text-lg">
+                🎯 Post-Auth Goal Plan
+              </Text>
+              <Text className="text-white font-montserrat-semibold">
+                Target: {userGoalPlan.target}
+              </Text>
+              {userGoalPlan.additionalDetails ? (
+                <Text className="text-neutral-300 font-montserrat-small">
+                  Details: {userGoalPlan.additionalDetails}
+                </Text>
+              ) : null}
+              <Text className="text-neutral-400 font-montserrat-small">
+                Period: {userGoalPlan.startDate} ~ {userGoalPlan.endDate}
+              </Text>
+              <Text className="text-neutral-400 font-montserrat-small">
+                Commitment: {userGoalPlan.dailyCommitment.hours}h{' '}
+                {userGoalPlan.dailyCommitment.minutes}m / day
               </Text>
             </View>
-          </View>
+          ) : null}
 
           {/* Dev Helper & SignOut Actions */}
           <View className="gap-3 mt-8">
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setCurrentRoute('PostOnboarding')}
+              className="bg-secondary-500 rounded-full py-3.5 items-center justify-center shadow-sm"
+            >
+              <Text className="text-black font-montserrat-bold text-base">
+                🎯 Replay Post-Auth Onboarding
+              </Text>
+            </TouchableOpacity>
+
             <TouchableOpacity
               activeOpacity={0.8}
               onPress={() => signOut()}
@@ -170,7 +226,7 @@ export const RootNavigator: React.FC = () => {
               className="bg-neutral-800 border border-secondary-500/40 rounded-full py-3.5 items-center justify-center"
             >
               <Text className="text-secondary-500 font-montserrat-semibold text-sm">
-                🔄 DEV: Clear Storage & Replay Onboarding
+                🔄 DEV: Clear Storage & Replay Pre-Auth Onboarding
               </Text>
             </TouchableOpacity>
           </View>
@@ -180,9 +236,8 @@ export const RootNavigator: React.FC = () => {
   }
 
   // =========================================================================
-  // LAYER 2: ONBOARDING STACK
-  // Nếu !hasCompletedOnboarding: BẮT BUỘC hiển thị Onboarding Stack
-  // initialRouteName = "WelcomeIntro" (Welcome 1) -> WelcomeFeatures (2) -> WelcomeOutfit (3)
+  // LAYER 2: PRE-AUTH ONBOARDING STACK
+  // Nếu !hasCompletedOnboarding: BẮT BUỘC hiển thị Pre-Auth Onboarding Stack
   // =========================================================================
   if (!hasCompletedOnboarding) {
     if (currentRoute === 'WelcomeFeatures') {
@@ -233,7 +288,7 @@ export const RootNavigator: React.FC = () => {
       <View className="flex-1">
         <SignUpScreen
           onNavigateToSignIn={() => setCurrentRoute('SignIn')}
-          onSignUpSuccess={() => setCurrentRoute('Dashboard')}
+          onSignUpSuccess={() => setCurrentRoute('PostOnboarding')}
         />
         <View className="absolute bottom-2 left-0 right-0 items-center pointer-events-auto">
           {renderDevResetFloatingButton()}
@@ -247,7 +302,7 @@ export const RootNavigator: React.FC = () => {
     <View className="flex-1">
       <SignInScreen
         onNavigateToSignUp={() => setCurrentRoute('SignUp')}
-        onSignInSuccess={() => setCurrentRoute('Dashboard')}
+        onSignInSuccess={() => setCurrentRoute('PostOnboarding')}
       />
       <View className="absolute bottom-2 left-0 right-0 items-center pointer-events-auto">
         {renderDevResetFloatingButton()}
